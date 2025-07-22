@@ -29,6 +29,8 @@ set(EXECUTABLE_NAME "ToDoApp-${VERSION_STRING}-${PLATFORM_NAME}")
 
 #gather main
 add_executable(${EXECUTABLE_NAME} 
+    src/ToDoElement.cpp
+    src/ToDoList.cpp
     main.cpp)
 
 #compiler warnings
