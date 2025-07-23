@@ -1,10 +1,20 @@
 #include "ToDoList.h"
 #include <iostream>
+#include <fstream>
+#include <stdexcept>
 
 size_t ToDoList::s_ID = 1;
 
 ToDoList::ToDoList(const std::string& path){
-//json reading here
+    std::ifstream file(path);
+    if(!file.is_open()){
+        throw std::runtime_error("Failed to open file: " + path);
+    }
+
+    json j;
+    file >> j;
+
+    *this = ToDoList::fromJson(j);
 }
 
 std::shared_ptr<ToDoList::ToDoElement> ToDoList::getElement(size_t index){
