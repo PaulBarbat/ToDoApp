@@ -3,7 +3,6 @@
 #include <fstream>
 #include <stdexcept>
 
-size_t ToDoList::s_ID = 1;
 
 ToDoList::ToDoList(const std::string& path){
     std::ifstream file(path);
@@ -17,11 +16,13 @@ ToDoList::ToDoList(const std::string& path){
     *this = ToDoList::fromJson(j);
 }
 
-std::shared_ptr<ToDoList::ToDoElement> ToDoList::getElement(size_t index){
-    if(index < m_elements.size())
-        return m_elements.at(index);
+std::shared_ptr<ToDoList::ToDoElement> ToDoList::getElement(size_t ID){
+    auto it = ToDoElement::s_Element_Map.find(ID);
+    if(it!= ToDoElement::s_Element_Map.end())
+        return it->second.lock();
     return nullptr;
 }
+
 
 bool ToDoList::addElement(ToDoElement&& element){
     if(element.getDescription().empty())
